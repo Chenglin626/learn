@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>randomRag</title>
+</head>
+
+<body>
+<script>
+// 随机从1到1000里选出50个数
+
+;(function randomNum1() {
+	
+	var arrNum = [],tarArr=[];		
+	
+	for ( var i=1; i<1001; i++ ) {
+		arrNum.push(i+1);
+	}
+	
+	
+	/*for ( var i=0; i<50; i++) {
+		tarArr.push(			// 直接使用push，将会产生[[],[],...]的形式，产生原因：arr.splice()返回的是一个数组
+			arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1 )
+		);
+	}*/
+	
+	// 改进方法一： 将arrNum.splice()由数组转变为数字
+	/*for ( var i=0; i<50; i++) {
+		tarArr.push(
+			parseInt( arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1 ))
+		);
+	}*/
+	
+	// 改进方法二： 使用concat()方法，该方法并不会改变原数组，所以需要将添加元素后的数组赋值给原数组
+	for ( var i=0; i<50; i++) {
+		tarArr = tarArr.concat(
+			arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1 )
+		);
+	}
+	
+	console.log( tarArr, tarArr.length );
+	
+})();
+
+</script>
+<script>
+;(function randomNum2( num, range1, range2 ) {
+	num = num || 50;
+	var rangeFrom, rangeTo;
+	
+	// 确认随机取数的范围
+	// 写的过于复杂，函数传参并不能像这样 fn( , , ); 因此不必考虑未赋值的情况
+	if ( range1 ) {
+		if ( range2 ) {
+			rangeFrom = range1 < range2 ? range1 : range2;
+			rangeTo = range1 < range2 ? range2 : range1;
+		} else {
+			rangeFrom = range1;
+			rangeTo = rangFrom + 1000;
+		}
+	} else {
+		range1 = 1;
+		range2 = range2 || 1000;
+		rangeFrom = range1 < range2 ? range1 : range2;
+		rangeTo = range1 < range2 ? range2 : range1;
+	}
+	
+	var arrNum = [], arrTar = [];
+	
+	for ( var i=rangeFrom; i < rangeTo+1; i++ ) {
+		arrNum.push(i);
+	}
+	
+	//使用while循环，确定随机取数并放入arrTar数组中；注意变换num值，否则会无限循环；同时，注意数组的splice方法的变量的设定，别把数字1设置到parseInt方法下，会造成arrTar的数组为NaN，忘了设置数字1，
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			parseInt( 
+				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
+			)
+		);
+		num --;
+	}
+	
+	console.log( arrTar, arrTar.length );
+	
+})();
+
+</script>
+<script>
+;(function randomNum3 ( num, rangeFrom, rangeTo ) {
+	num = num || 50;
+	rangeFrom = rangeFrom || 1;
+	rangeTo = rangeTo || 1000;
+	
+	var arrRan = [], arrNum = [], arrTar = [];
+	
+	// 对取值范围进行排序
+	arrRan.push( rangeFrom, rangeTo );
+	arrRan.sort( function ( a, b ) {
+		return a-b;
+	});
+	
+	// for 中间的boolean判断不能使用++i或i++，会显示uncaught exception: out of memory
+	
+	for ( var i = arrRan[0]; i < arrRan[1]+1; i++) {
+		arrNum.push(i);
+	}
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			parseInt( 
+				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
+			)
+		);
+		num--;
+	}
+	
+	console.log( arrRan, arrTar, arrTar.length, arrNum );
+	
+})( 5, -30, -70 );
+</script>
+<script>
+//rangeFrom和rangeTo传参进入的不是整数；将取数范围控制在两数之间的整数
+;(function randomNum3 ( num, rangeFrom, rangeTo ) {
+	num = num || 50;
+	rangeFrom = rangeFrom || 1;
+	rangeTo = rangeTo || 1000;
+	
+	var arrRan = [], arrNum = [], arrTar = [];
+	
+	arrRan.push( rangeFrom, rangeTo );
+	arrRan.sort( function ( a, b ) {
+		return a-b;
+	});
+	
+	// 对传入的参数进行取整；因为已经排序完毕，对大小不同的进行分别处理，确保取值在这两数之间
+	
+	arrRan[0] = Math.ceil( arrRan[0] );
+	arrRan[1] = Math.floor( arrRan[1] );
+	
+	for ( var i = arrRan[0]; i < arrRan[1]+1; i++) {
+		arrNum.push(i);
+	}
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			parseInt( 
+				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
+			)
+		);
+		num--;
+	}
+	
+	console.log( arrRan, arrTar, arrTar.length, arrNum );
+	
+})( 10, -31.5, -11.4 );
+</script>
+<script>
+// 对num, rangeFrom, rangeTo, 的数据关系进行判断；
+;(function randomNum3 ( num, rangeFrom, rangeTo ) {
+	if ( num !== parseInt(num) && num <= 0 ) console.info( 'num参数最好使用整数并大于0' ); 
+	num = num ? ( num > 0 ? parseInt(num) : 0 ) : 50;
+	rangeFrom = rangeFrom || 1;
+	rangeTo = rangeTo || 1000;
+		
+	var arrRan = [], arrNum = [], arrTar = [];
+	
+	arrRan.push( rangeFrom, rangeTo );
+	arrRan.sort( function ( a, b ) {
+		return a-b;
+	});
+		
+	arrRan[0] = Math.ceil( arrRan[0] );
+	arrRan[1] = Math.floor( arrRan[1] );
+	
+	if ( num > ( arrRan[1] - arrRan[0]+1 )) return console.warn( 'num参数应大于范围间整数个数' ); 
+	
+	for ( var i = arrRan[0]; i < arrRan[1]+1; i++) {
+		arrNum.push(i);
+	}
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			parseInt( 
+				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
+			)
+		);
+		num--;
+	}
+	
+	console.log( arrRan, arrTar, arrTar.length, arrNum );
+	
+})( 5, -2.3, -4.5 );
+
+</script>
+<script>
+;(function randomNum3 ( num, rangeFrom, rangeTo ) {
+	if ( num !== parseInt(num) && num <= 0 ) console.info( 'num参数最好使用整数并大于0' ); 
+	num = num ? ( num > 0 ? parseInt(num) : 0 ) : 50;
+	rangeFrom = rangeFrom || 1;
+	rangeTo = rangeTo || 1000;
+		
+	var arrRan = [], arrNum = [], arrTar = [];
+	
+	arrRan.push( rangeFrom, rangeTo );
+	arrRan.sort( function ( a, b ) {
+		return a-b;
+	});
+		
+	arrRan[0] = Math.ceil( arrRan[0] );
+	arrRan[1] = Math.floor( arrRan[1] );
+	
+	if ( num > ( arrRan[1] - arrRan[0]+1 )) return console.warn( 'num参数应大于取数区间整数个数' ); 
+	
+	for ( var i = arrRan[0]; i < arrRan[1]+1; i++) {
+		arrNum.push(i);
+	}
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			parseInt( 
+				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
+			)
+		);
+		num--;
+	}
+	
+	console.log( arrRan, arrTar, arrTar.length, arrNum );
+	
+})( 5, -2.3, -4.5 );
+</script>
+<script>
+;(function randomRag( num, rangeFrom, rangeTo ) {
+	if ( num !== parseInt(num) && num <= 0 ) console.info( 'num参数最好使用整数并大于0' ); 
+	num = num ? ( num > 0 ? parseInt(num) : 0 ) : 50;
+	rangeFrom = rangeFrom || 1;
+	rangeTo = rangeTo || 1000;
+		
+	var arrRan = [], arrNum = [], arrTar = [];
+	
+	arrRan.push( rangeFrom, rangeTo );
+	arrRan.sort( function ( a, b ) {
+		return a-b;
+	});
+		
+	arrRan[0] = Math.ceil( arrRan[0] );
+	arrRan[1] = Math.floor( arrRan[1] );
+	
+	// range范围的整数个数为 arrRan[1] - ( arrRan[0] -1 )，别计算错；
+	
+	if ( num > ( arrRan[1] - arrRan[0] + 1 )) return console.warn( 'num参数应大于取数区间整数个数' ); 
+	
+	for ( var i = arrRan[0]; i < arrRan[1]+1; i++) {
+		arrNum.push(i);
+	}
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			parseInt( 
+				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
+			)
+		);
+		num--;
+	}
+	
+	console.log( arrTar, arrNum );
+	// 将目标数组输出
+	return arrTar;
+})( 5, 1, 5 );
+
+//console.log( randomRag( 5, 1, 5 ));
+
+
+</script>
+</body>
+</html>
