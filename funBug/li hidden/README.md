@@ -1,14 +1,6 @@
-﻿# randomRag
-函数说明：<br>
-从一个区间里面随机取出n个整数；
-	
-参数：<br>
-num： 取数的个数，最小值为0，若为浮点数，取不大于浮点数的整数；<br>
-rangeFrom： 区间的下限，默认1，可为负数，可为小数；<br>
-rangeTo： 区间的上限，默认1000，可为负数，可为小数；<br>
-rangeFrom和rangeTo没有大小要求；
-	
-例子：<br>
-randomRag( 5 )		//从1至1000之间取出5个整数；<br>
-randomRag( 5, -4.5, -105.7 )		//从-5至-105之间取出5个整数；<br>
-randomRag( 5, 1, 5 )		//乱序；
+﻿# li hidden
+bug1描述：<br>
+IE6下，当鼠标移到#nav li上时，#showbox li前四个外的li标签会隐藏；当鼠标移到a#prev上时，li标签全会显示出来。
+
+bug2描述：<br>
+IE6下，#sumList，#showbox，#selfList 三个div只有#selfList的位置不正确；
