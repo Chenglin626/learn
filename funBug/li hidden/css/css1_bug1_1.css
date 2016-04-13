@@ -1,0 +1,75 @@
+body, h1, p, ul, input {margin: 0; padding: 0;}
+li {list-style: none;}
+a {text-decoration: none;}
+img {border: none; vertical-align: top;}
+body{font-family: \5b8b\4f53, tahoma, arial, sans-serif;}
+#head, #content{width: 100%; min-width: 1000px;}
+#head{background: url(../images/background2.gif) repeat-x;}
+#content{height: 600px; background: url(../images/background.gif) repeat;}
+.swap{width: 1000px; margin:0 auto; position: relative;}
+.head{height: 55px;}
+#content div.swap{height: 420px;}
+#head h1{width: 150px; height: 55px; float: left; margin-left: 20px;font-size: 36px; line-height: 55px; font-weight: bold;color: #000;}
+#head ul{width: 200px; height: 30px; float: right; margin: 13px 20px 12px 0; overflow: hidden; position: relative;}
+#head li{width: 25px; height: 30px; float: left; position: relative;top:0; left: 0;}
+#head li img{width: 25px; height: 30px; position: relative;}
+#body_signIn { width: 46px; height: 20px; border: 2px solid #e3e3e3; font-size: 16px; line-height: 20px; font-weight: bold; cursor: pointer; text-align: center; float: right; margin-top: 26px; margin-right: 5px;}
+#filter {width: 100%; height: 100%; position: fixed; top: 0; left: 0; background: #000; opacity: 0.3; filter: alpha( opacity = 30 );}
+#signIn {width: 300px; height: 200px; border: 2px solid #5e5e5e; background: #fff; opacity: 1; filter: alpha( opacity = 100 );-moz-box-shadow:3px 3px 10px #333333; -webkit-box-shadow:3px 3px 10px #333333; box-shadow:3px 3px 10px #333333; position: fixed; top: 50%; left: 50%; margin-left: -152px; margin-top: -102px;}
+#signIn table {position: relative; top: 25px; left: 0; }
+#signIn td {height: 50px; vertical-align: top;}
+#signIn td:first-child {width: 100px; text-align: right; font-size: 16px; line-height: 20px;}
+#signIn td:last-child {width: 200px; font-size: 12px; line-height: 16px;}
+.user { width: 173px; }
+#signIn span { display: block; font-size: 12px; line-height: 16px; margin-top: 5px;}
+
+#navbar{ width: 270px; height: 400px; background: url(../images/frame.png) no-repeat; position: relative; float: left;}
+#navbar ul{width: 200px; height: 135px; padding-top: 15px; position: relative; top: 106px; left: 34px; background: url(../images/woodlist.png) no-repeat;}
+#navbar li{width: 200px; height: 30px; margin-bottom: 15px; position: relative; color: #903;}
+#navbar li.action {color: #FF0;}
+#navbar p{width: 200px; height: 30px; position: relative; text-align: center; font-size: 24px; line-height: 30px; font-weight: bold; cursor: pointer;}
+/*
+	为了观察li的位置，将原宽度和高度各缩小2px，并增加边框
+*/
+#sumList, #showbox, #selfList {width: 728px; height: 398px; border: 1px solid black; position: relative; float: left;}
+#showbox, #selfList{ display: none;}
+#sumList div{ width: 100px; height: 60px; float: left; margin: 50px 0 0 50px;}
+#sumList a { width: 100px; height: 60px; display: block; border: 1px solid #e5e5e5;}
+.showbox { width: 500px; height: 300px; position: relative; top: 50px; left: 115px;}
+.showbox img { width: 500px; height: 300px; position: relative;}
+/*
+	bug1描述：当鼠标移到#nav li上时，#showbox li前四个外的li标签会隐藏；当鼠标移到a#prev上时，li标签全会显示出来。
+	猜测解决方案：.showbox ul 针对li隐藏进行提升包裹标签的层级；
+	方案结果：提升层级后，发现之前隐藏的li标签，位于一个#showbox的高度下方；
+	进阶：对#showbox li使用绝对定位，用JS控制top和left值；
+	问题解决；将#showbox ul 下border属性去掉，将body 下 height属性去掉；
+*/
+#showbox ul { height: 15px; padding: 0; position: relative; left: 167px; bottom: 30px;}
+#showbox li { width: 15px; height: 15px; background: url(../images/pic.png) -15px -102px no-repeat; position: absolute; cursor: pointer;}
+#showbox li.active { background: url(../images/pic.png) 0 -102px no-repeat;}
+div.mini_pic { width: 120px; height: 90px; background: url(../images/pic.png) -30px -102px no-repeat;	position: absolute;	top: -90px;	left: -52px; display: none;}
+.mini_pic i, i { width: 100px; height: 67px; position: absolute; top: 10px;	left: 10px;	background-repeat: no-repeat}
+.showbox a { width: 51px; height: 51px; position: absolute; top: 124px; opacity: 0.5; filter: alpha(opacity = 50); z-index: 1;}
+#prev { left: 30px;	background: url(../images/pic.png) 0 0 no-repeat;}
+#next {	right: 30px; background: url(../images/pic.png) -51px 0 no-repeat;}
+a#prev:hover, a#next:hover { opacity: 0.8; filter: alpha(opacity = 80);}
+a#prev:hover { background: url(../images/pic.png) 0 -51px no-repeat;}
+a#next:hover { background: url(../images/pic.png) -51px -51px no-repeat;}
+/* 
+	bug2描述：#sumList，#showbox，#selfList 三个div只有#selfList的位置不正确；
+	解决方案1：在三个div外包一个div作为容器，进行定位；id：picTab；
+	方案1结果：问题没解决，#sumList和#showbox依旧正常，#selfList位置位于#nav下。
+	进阶1：对IE6使用css hack；
+	进阶1结果：在各浏览器下，显示结果一致。
+	
+*/
+#picTab { width: 730px; height: 400px; float: left; position: relative;}
+/*
+	bug2_1进阶1 ：针对IE6下#selfList位置移位的解决，使用"-"进行hack处理。
+*/
+#selfList { top: 0; left: 0; -top: -400px; -left: 270px;}
+.sumPic {width: 700px; height: 350px; position: relative; overflow: auto;}
+.sumPic li { width: 100px; height: 60px; margin: 10px 0 0 10px; border: 2px solid black; float: left; margin: 10px 0 0 10px; position: relative; cursor: pointer;}
+.sumPic li.select {border-color: #FF0;}
+.selectList {width: 700px; height: 50px; padding-left: 30px;}
+.selectList input {font-size: 12px; line-height: 20px; text-align: center; margin-top: 10px;}

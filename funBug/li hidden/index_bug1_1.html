@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>myProduct</title>
+<link rel="icon" href="images/flyingBird.ico" />
+<link rel="stylesheet" href="css/css1_bug1_1.css" />
+<style>
+
+</style>
+</head>
+<body>
+<div id="head">
+    <div class="swap head">
+		<h1>图片酷</h1>
+		<ul>
+        	<li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+            <li>
+    	<img src="" alt="" />
+        <img src="" alt="" />
+   		    </li>
+        </ul>
+        <div id="body_signIn">
+       		登录
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div class="swap">
+        <div id="navbar">
+            <ul>
+            	<li class="action">
+                	<p>图库总览</p>
+                </li>
+                <li>
+                	<p>图片浏览</p>
+                </li>
+                <li>
+                	<p>自定义图库</p>
+                </li>                
+            </ul>
+        </div>
+        <!-- bug2_1 将#sumList，#showbox，#selfList外包一个div -->
+        <div id="picTab">
+            <div id="sumList">
+                <div>
+                    <a href="images/landscape/landscape_1.png"><img src="images/landscape/landscape_mini_1.png" alt="" /></a>
+                </div>
+                <div>
+                    <a href="images/beach/beach_1.png"><img src="images/beach/beach_mini_1.png" alt="" /></a>
+                </div>
+                <div>
+                    <a href="images/road/road_1.png"><img src="images/road/road_mini_1.png" alt="" /></a>
+                </div>
+            </div>
+            <div id="showbox">
+            <!--  将ul放在#showbox下，发现当li标签超过四个的时候，多余的两个被放置在了约一个#showbox高度下方，逐将ul还原 -->
+            <!--  将li的浮动改为绝对定位后，IE6下的bug解决，将.showbox img 下visibility属性改回 -->
+                <div class="showbox">
+                    <img src="" alt="" />
+                    <ul>
+                    </ul>
+                    <a href="javascript:;" id="prev"></a>
+                    <a href="javascript:;" id="next"></a>
+                </div>
+            </div>
+            <div id="selfList">
+                <div class="selectList">
+                    <input type="button" value="全选" />
+                    <input type="button" value="反选" />
+                    <input type="button" value="确定" />
+                    <input type="button" value="取消" />
+                </div>
+                <ul class="sumPic">            
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/js1_bug1_1.js"></script>
+<script src="js/js2.js"></script>
+</body>
+</html>
