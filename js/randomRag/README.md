@@ -12,3 +12,14 @@ rangeFrom和rangeTo没有大小要求；
 randomRag( 5 )		//从1至1000之间取出5个整数；<br>
 randomRag( 5, -4.5, -105.7 )		//从-5至-105之间取出5个整数；<br>
 randomRag( 5, 1, 5 )		//乱序；
+
+2016/4/18<br>
+使用数组读数方法，更改 randomRag.html 文件；<br>
+将arrTar.push( parseInt( arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)));<br>
+更改为arrTar.push( arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)[0] );
+
+测试结果，有效；<br>
+更改 randomRag.js 文件；
+
+引入js文件测试，有效；
+

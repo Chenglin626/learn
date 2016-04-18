@@ -270,8 +270,45 @@
 })( 5, 1, 5 );
 
 //console.log( randomRag( 5, 1, 5 ));
+</script>
+<script>
+;(function randomRag( num, rangeFrom, rangeTo ) {
+	if ( num !== parseInt(num) && num <= 0 ) console.info( 'num参数最好使用整数并大于0' ); 
+	num = num ? ( num > 0 ? parseInt(num) : 0 ) : 50;
+	rangeFrom = rangeFrom || 1;
+	rangeTo = rangeTo || 1000;
+		
+	var arrRan = [], arrNum = [], arrTar = [];
+	
+	arrRan.push( rangeFrom, rangeTo );
+	arrRan.sort( function ( a, b ) {
+		return a-b;
+	});
+		
+	arrRan[0] = Math.ceil( arrRan[0] );
+	arrRan[1] = Math.floor( arrRan[1] );
+	
+	// range范围的整数个数为 arrRan[1] - ( arrRan[0] -1 )，别计算错；
+	
+	if ( num > ( arrRan[1] - arrRan[0] + 1 )) return console.warn( 'num参数应大于取数区间整数个数' ); 
+	
+	for ( var i = arrRan[0]; i < arrRan[1]+1; i++) {
+		arrNum.push(i);
+	}
+	
+	while ( num > 0 ) {
+		arrTar.push(
+			 arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)[0]
+		);
+		num--;
+	}
+	
+	console.log( arrTar, arrNum );
+	// 将目标数组输出
+	return arrTar;
+})( 5, 1, 100 );
 
-
+//console.log( randomRag( 5, 1, 5 ));
 </script>
 </body>
 </html>

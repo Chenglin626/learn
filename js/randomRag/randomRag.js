@@ -67,9 +67,7 @@
 	
 	while ( num > 0 ) {
 		arrTar.push(
-			parseInt( 
-				arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)
-			)
+			arrNum.splice( Math.floor( Math.random()*arrNum.length ), 1)[0]
 		);
 		num--;
 	}
