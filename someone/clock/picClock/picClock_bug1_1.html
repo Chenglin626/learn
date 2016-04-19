@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片时钟</title>
+<style>
+ul {
+	width: 800px;
+	height: 141px;
+	border: 1px solid black;
+	margin: 40px auto;
+	padding: 0;
+	/*
+	overflow: hidden;
+	*/
+}
+li {
+	width: 100px;
+	height: 141px;
+	list-style: none;
+	float: left;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+img {
+	width: 100px;
+	height: 141px;
+	vertical-align: top;
+	position: relative;
+}
+
+</style>
+</head>
+
+<body>
+<span></span>
+<ul>
+	<li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+    <li>
+    	<img src="" alt="">
+        <img src="" alt="">
+    </li>
+</ul>
+
+<script>
+var oSpan = document.getElementsByTagName('span')[0];
+function fnDate() {
+	var iTime = new Date();
+	var iHours = iTime.getHours();
+	var iMin = iTime.getMinutes();
+	var iSec = iTime.getSeconds();
+	var str = '';
+	
+	function toTwo( n ) {
+		return n<10 ? '0' + n : '' + n ;
+	}
+	str = toTwo( iHours ) + ':' + toTwo( iMin ) + ':' + toTwo( iSec );
+	oSpan.innerHTML = str;
+}
+fnDate();
+setInterval( fnDate, 1000 );
+</script>
+
+<script>
+
+var oUl = document.getElementsByTagName('ul')[0];
+var aLi = oUl.getElementsByTagName('li');
+
+function getStyle( obj, attr ) {
+	return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr] ;
+}
+
+function onMove( obj, attr, dir, tar , endFn ) {
+	dir = tar > parseInt(getStyle( obj, attr )) ? dir : -dir;
+	clearInterval( obj.timer );
+	obj.timer = setInterval( function () {
+		obj.speed = parseInt(getStyle( obj, attr )) + dir;
+		if ( dir>0 && obj.speed>tar || dir<0 && obj.speed<tar ) {
+			obj.speed = tar;
+		}
+		obj.style[attr] = obj.speed + 'px';
+		if ( obj.speed === tar ) {
+			clearInterval( obj.timer );
+			endFn && endFn();
+		}
+	}, 100 );
+}
+
+function diTa( i ) {
+	var aImg = aLi[i].getElementsByTagName('img');
+	aImg[0].style.display = 'none';
+	clearTimeout( aLi[i].timer );
+	aLi[i].timer = setTimeout( function() {
+		aImg[0].style.display = 'block';
+	}, 100 );
+}
+
+function ini( i ) {
+	var str = oSpan.innerHTML;
+	var aImg = aLi[i].getElementsByTagName('img');
+	var num = Number(str.charAt(i));
+	if ( i === 2 || i === 5 ) {
+		aImg[0].style.display = 'block';
+		aImg[0].src = 'Img/TimePic/colon.JPG';
+		aImg[1].src = 'Img/TimePic/colonNo.JPG';
+		
+	} else {
+		aLi[i].style.top = 0;
+		aImg[0].src = 'Img/TimePic/' + num + '.JPG';
+		if ( i === 1 || i === 4 || i === 7 ) {
+			aImg[1].src = 'Img/TimePic/' + (num+1)%10 + '.JPG';
+		} else if ( i === 3 || i === 6 ) {
+			aImg[1].src = 'Img/TimePic/' + (num+1)%6 + '.JPG';
+		} else if ( i === 0 ) {
+			aImg[1].src = 'Img/TimePic/' + (num+1)%2 + '.JPG';
+		}
+	}
+}
+
+function auto( i ) {
+	onMove( aLi[i], 'top', 30 , -141, ini(i));
+}
+
+(function payBack () {
+	for ( var i=0; i<aLi.length; i++ ) {
+		ini(i);
+	}
+	var arrNum = [];
+	for ( var i=0; i< aLi.length; i++) {
+		arrNum.push(Number(oSpan.innerHTML.charAt(i)));
+	}
+	clearTimeout( oUl.timer );
+	oUl.timer = setTimeout( function() { 
+		auto(7);
+		if ( arrNum[7] === 9 ) auto(6);
+		if ( arrNum[6] === 5 && arrNum[7] === 9 ) auto(4);
+		if ( arrNum[4] === 9 && arrNum[6] === 5 && arrNum[7] === 9 ) auto(3);
+		if ( arrNum[3] === 5 && arrNum[4] === 9 && arrNum[6] === 5 && arrNum[7] === 9) auto(1);
+		if ( arrNum[1] === 9 && arrNum[3] === 5 && arrNum[4] === 9 && arrNum[6] === 5 && arrNum[7] === 9) auto(0);
+		diTa(5);
+		diTa(2);
+		setTimeout( function () {
+			payBack();
+		}, 600 )
+	}, 400 )
+})();
+</script>
+</body>
+</html>

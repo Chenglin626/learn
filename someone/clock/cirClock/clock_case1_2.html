@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style id="cssStyle">
+#time { min-width: 500px; height: 30px; margin: 10px; text-align: center;}
+.timer { font-family: "微软雅黑", tahoma, arail, sans-serif; font-size: 26px; line-height: 30px; font-weight: bold;}
+
+#wrap { width: 200px; height: 200px; margin: 30px auto; position: relative;}
+#dial { width: 196px; height: 196px; padding: 0; margin: 0; border: 2px solid yellow; /*border-radius: 50%;*/}
+/*
+	#dial li 的transform-origin属性设置成 0 100px，在第30个li的位置已经能够很明显地发现，旋转后有偏差；
+	原因是li元素的自身宽度的影响；
+	将该属性设置成 1px 100px 或者 center 100px ，对应的li元素便处于应该在的位置上，见 clock_case1_2.html；
+	
+	改变#dial li 的left属性值 为 99px；
+*/
+
+#dial li { list-style: none; width: 2px; height: 7px; background: black; left: 99px; top: 0; position: absolute; transform-origin: center 100px;}
+
+/*
+#dial li:nth-of-type(1) { transform: rotate( 0deg ) translateX();}
+#dial li:nth-of-type(2) { transform: rotate( 6deg );}
+#dial li:nth-of-type(3) { transform: rotate( 12deg );}
+#dial li:nth-of-type(4) { transform: rotate( 18deg );}
+#dial li:nth-of-type(5) { transform: rotate( 24deg );}
+#dial li:nth-of-type(6) { transform: rotate( 30deg );}
+#dial li:nth-of-type(7) { transform: rotate( 36deg );}
+#dial li:nth-of-type(8) { transform: rotate( 42deg );}
+#dial li:nth-of-type(9) { transform: rotate( 48deg );}
+#dial li:nth-of-type(10) { transform: rotate( 54deg );}
+#dial li:nth-of-type(5n-4) { height: 10px;}
+*/
+
+</style>
+</head>
+
+<body>
+<div id="time">
+	<span class="timer">11:49:50</span>
+</div>
+<div id="wrap">
+    <ul id="dial">
+    	<!--
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    	-->
+    </ul>
+	<div id="hours"></div>
+    <div id="mins"></div>
+    <div id="secs"></div>
+</div>
+
+<script>
+// 表盘刻度
+;(function () {
+	var oUl = document.getElementById('dial');
+	var aLi = oUl.getElementsByTagName('li');
+	var eleStr = '';
+	var styleStr = '';
+	var sCss = document.getElementById('cssStyle');
+	
+	for ( var i = 0; i < 60; i++ ) {
+		eleStr += '<li></li>';
+		styleStr += '#dial li:nth-of-type(' + (i + 1) + ') { transform: rotate( ' + i*6 + 'deg );}';
+	}
+	oUl.innerHTML = eleStr;
+	sCss.innerHTML += styleStr + '#dial li:nth-of-type(5n-4) { height: 10px;}';
+	
+	
+	console.log( 1, typeof sCss );
+})();
+
+</script>
+</body>
+</html>
